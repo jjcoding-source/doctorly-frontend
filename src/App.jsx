@@ -8,8 +8,8 @@ import Register from "./pages/public/Register";
 
 import PatientDashboard from "./pages/patient/Dashboard";
 import Doctors from "./pages/patient/Doctors";
-import Doctors from './pages/patient/Doctors';
-import DoctorDetail from './pages/patient/DoctorDetail';
+import Doctors from "./pages/patient/Doctors";
+import DoctorDetail from "./pages/patient/DoctorDetail";
 
 import DoctorDashboard from "./pages/doctor/Dashboard";
 
@@ -29,8 +29,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-
-            {/* Patient Routes */}
+            // Patient Routes
             <Route element={<ProtectedRoute allowedRoles={["patient"]} />}>
               <Route element={<PatientLayout />}>
                 <Route
@@ -39,19 +38,25 @@ function App() {
                 />
                 <Route path="/patient/doctors" element={<Doctors />} />
                 <Route path="/patient/doctors/:id" element={<DoctorDetail />} />
+                <Route
+                  path="/patient/appointments"
+                  element={<PatientAppointments />}
+                />
               </Route>
             </Route>
-
-            {/* Doctor Routes */}
+            // Doctor Routes
             <Route element={<ProtectedRoute allowedRoles={["doctor"]} />}>
-              <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+              <Route element={<PatientLayout />}>
+                {" "}
+                {/* Reuse layout for now - later create DoctorLayout */}
+                <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+                <Route path="/doctor/schedule" element={<DoctorSchedule />} />
+              </Route>
             </Route>
-
             {/* Admin Routes */}
             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Route>
-
             <Route
               path="*"
               element={
