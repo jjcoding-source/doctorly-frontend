@@ -1,14 +1,20 @@
 const StatusBadge = ({ status }) => {
   const colors = {
-    pending: 'bg-yellow-100 text-yellow-700',
-    confirmed: 'bg-green-100 text-green-700',
-    completed: 'bg-blue-100 text-blue-700',
-    cancelled: 'bg-red-100 text-red-700',
+    pending: 'bg-amber-100 text-amber-700 ring-amber-200',
+    confirmed: 'bg-emerald-100 text-emerald-700 ring-emerald-200',
+    completed: 'bg-sky-100 text-sky-700 ring-sky-200',
+    cancelled: 'bg-rose-100 text-rose-700 ring-rose-200',
+    available: 'bg-emerald-100 text-emerald-700 ring-emerald-200',
+    blocked: 'bg-slate-200 text-slate-700 ring-slate-300',
   };
 
+  const normalized = status?.toLowerCase() || 'pending';
+
   return (
-    <span className={`px-3 py-1 rounded-full text-xs font-medium ${colors[status] || 'bg-gray-100'}`}>
-      {status.charAt(0).toUpperCase() + status.slice(1)}
+    <span
+      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold capitalize ring-1 ${colors[normalized] || 'bg-slate-100 text-slate-700 ring-slate-200'}`}
+    >
+      {normalized}
     </span>
   );
 };

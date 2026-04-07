@@ -1,5 +1,5 @@
 import { useAuth } from '../../contexts/AuthContext';
-import { LogOut, Bell, User } from 'lucide-react';
+import { Bell, LogOut, Search, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
@@ -12,41 +12,50 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center">
-            <span className="text-white font-bold text-xl">D</span>
+    <nav className="sticky top-0 z-40 border-b border-sky-100 bg-white/90 px-4 py-4 backdrop-blur-xl md:px-8">
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-700/80">
+            Connected Care Platform
+          </p>
+          <h1 className="mt-1 text-2xl font-bold tracking-[-0.04em] text-slate-900">
+            Doctorly Workspace
+          </h1>
+        </div>
+
+        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <div className="glass flex items-center gap-3 rounded-full px-4 py-3 text-sm text-slate-500 shadow-sm">
+            <Search className="h-4 w-4" />
+            <span>Search appointments, specialists, or records</span>
           </div>
-          <h1 className="text-2xl font-semibold text-gray-800">Doctorly</h1>
+
+          {user && (
+            <div className="flex items-center gap-3">
+              <button className="glass rounded-full p-3 text-slate-600 transition hover:bg-sky-50">
+                <Bell className="h-5 w-5" />
+              </button>
+
+              <div className="glass flex items-center gap-3 rounded-full px-3 py-2">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-sm">
+                  <User className="h-5 w-5" />
+                </div>
+                <div className="pr-2">
+                  <p className="text-sm font-semibold text-slate-900">{user.name}</p>
+                  <p className="text-xs capitalize text-slate-500">{user.role}</p>
+                </div>
+              </div>
+
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-600 transition hover:bg-rose-100"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
-
-      {user && (
-        <div className="flex items-center gap-6">
-          <button className="p-2 hover:bg-gray-100 rounded-xl transition">
-            <Bell className="w-5 h-5 text-gray-600" />
-          </button>
-
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="font-medium text-sm">{user.name}</p>
-              <p className="text-xs text-gray-500 capitalize">{user.role}</p>
-            </div>
-            <div className="w-9 h-9 bg-sky-100 rounded-full flex items-center justify-center">
-              <User className="w-5 h-5 text-primary" />
-            </div>
-          </div>
-
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-red-600 hover:bg-red-50 px-4 py-2 rounded-xl transition"
-          >
-            <LogOut className="w-4 h-4" />
-            <span className="text-sm">Logout</span>
-          </button>
-        </div>
-      )}
     </nav>
   );
 };

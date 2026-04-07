@@ -1,11 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Inter', system_ui, sans-serif;
+@layer base {
+  :root {
+    color-scheme: light;
+    --bg: 244 247 251;
+    --surface: 255 255 255;
+    --surface-muted: 246 248 251;
+    --border: 209 219 229;
+    --text: 15 23 42;
+    --text-soft: 87 104 129;
+    --brand: 14 116 144;
+    --brand-strong: 8 145 178;
+    --accent: 16 185 129;
+    --danger: 239 68 68;
+    --shadow-lg: 0 24px 80px -34px rgb(15 23 42 / 0.28);
+    --shadow-card: 0 18px 50px -26px rgb(15 23 42 / 0.18);
+  }
+
+  * {
+    @apply border-transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-slate-100 text-slate-900 antialiased;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 28%),
+      radial-gradient(circle at top right, rgba(125, 211, 252, 0.2), transparent 22%),
+      linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  ::selection {
+    @apply bg-cyan-200 text-slate-900;
+  }
 }
 
-.card {
-  @apply bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all;
+@layer components {
+  .app-shell {
+    @apply min-h-screen bg-transparent text-slate-900;
+  }
+
+  .page-shell {
+    @apply relative overflow-hidden rounded-[2rem] border border-sky-100 bg-white shadow-soft;
+  }
+
+  .card {
+    @apply rounded-[1.75rem] border border-sky-100 bg-white shadow-soft transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-1 hover:shadow-card;
+  }
+
+  .glass {
+    @apply border border-sky-100 bg-white/90 backdrop-blur-xl;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold tracking-[-0.04em] text-slate-900 md:text-4xl;
+  }
+
+  .section-copy {
+    @apply text-base leading-7 text-slate-600 md:text-lg;
+  }
+
+  .field-label {
+    @apply mb-2 block text-sm font-semibold text-slate-700;
+  }
+
+  .field-input {
+    @apply w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3.5 text-sm text-slate-900 outline-none transition duration-200 placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100;
+  }
+
+  .pill-tab {
+    @apply rounded-full border border-transparent px-4 py-2 text-sm font-semibold transition-all duration-200;
+  }
+
+  .hero-gradient {
+    background:
+      radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.22), transparent 18%),
+      radial-gradient(circle at 82% 10%, rgba(191, 219, 254, 0.4), transparent 22%),
+      linear-gradient(135deg, #eff6ff 0%, #dbeafe 52%, #bfdbfe 100%);
+  }
+
+  .mesh-panel {
+    background:
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.7), transparent 42%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.82));
+  }
 }

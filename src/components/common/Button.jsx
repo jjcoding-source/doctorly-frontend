@@ -1,13 +1,28 @@
-const Button = ({ children, variant = 'primary', className = '', ...props }) => {
-  const base = 'px-6 py-3 rounded-xl font-medium transition-all active:scale-95';
-  const variants = {
-    primary: 'bg-primary text-white hover:bg-sky-600',
-    outline: 'border border-gray-300 hover:bg-gray-50',
-    danger: 'bg-red-500 text-white hover:bg-red-600',
+const Button = ({
+  children,
+  variant = 'primary',
+  className = '',
+  type = 'button',
+  ...props
+}) => {
+  const base =
+    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold tracking-tight transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50';
+
+  const styles = {
+    primary:
+      'bg-gradient-to-r from-sky-600 to-blue-500 text-white shadow-soft hover:-translate-y-0.5 hover:shadow-card',
+    secondary:
+      'bg-slate-900 text-white shadow-soft hover:-translate-y-0.5 hover:bg-slate-800',
+    outline:
+      'border border-sky-100 bg-white text-slate-700 shadow-sm hover:-translate-y-0.5 hover:border-sky-200 hover:bg-sky-50',
+    ghost:
+      'bg-transparent text-slate-700 hover:bg-sky-50',
+    danger:
+      'bg-rose-500 text-white shadow-soft hover:-translate-y-0.5 hover:bg-rose-600',
   };
 
   return (
-    <button className={`${base} ${variants[variant]} ${className}`} {...props}>
+    <button type={type} className={`${base} ${styles[variant]} ${className}`} {...props}>
       {children}
     </button>
   );

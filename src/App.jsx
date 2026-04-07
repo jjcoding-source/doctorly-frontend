@@ -1,37 +1,30 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
-
+import PatientLayout from './components/layout/PatientLayout';
+import { AuthProvider } from './contexts/AuthContext';
+import AdminDashboard from './pages/admin/Dashboard';
+import DoctorDashboard from './pages/doctor/Dashboard';
+import DoctorSchedule from './pages/doctor/Schedule';
+import PatientAppointments from './pages/patient/Appointments';
+import PatientDashboard from './pages/patient/Dashboard';
+import DoctorDetail from './pages/patient/DoctorDetail';
+import Doctors from './pages/patient/Doctors';
+import Profile from './pages/profile/Profile';
 import Home from './pages/public/Home';
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
-
-import PatientLayout from './components/layout/PatientLayout';
-import PatientDashboard from './pages/patient/Dashboard';
-import Doctors from './pages/patient/Doctors';
-import DoctorDetail from './pages/patient/DoctorDetail';
-import PatientAppointments from './pages/patient/Appointments';
-
-import DoctorDashboard from './pages/doctor/Dashboard';
-import DoctorSchedule from './pages/doctor/Schedule';
-
-import AdminDashboard from './pages/admin/Dashboard';
-
 import ProtectedRoute from './routes/ProtectedRoute';
-import Profile from './pages/profile/Profile';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50">
+        <div className="app-shell">
           <Routes>
-            {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            {/* Patient Routes */}
             <Route element={<ProtectedRoute allowedRoles={['patient']} />}>
               <Route element={<PatientLayout />}>
                 <Route path="/patient/dashboard" element={<PatientDashboard />} />
@@ -42,7 +35,6 @@ function App() {
               </Route>
             </Route>
 
-            {/* Doctor Routes */}
             <Route element={<ProtectedRoute allowedRoles={['doctor']} />}>
               <Route element={<PatientLayout />}>
                 <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
@@ -51,7 +43,6 @@ function App() {
               </Route>
             </Route>
 
-            {/* Admin Routes */}
             <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
               <Route element={<PatientLayout />}>
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -59,15 +50,24 @@ function App() {
               </Route>
             </Route>
 
-            {/* 404 */}
-            <Route path="*" element={
-              <div className="flex items-center justify-center min-h-screen">
-                <div className="text-center">
-                  <h1 className="text-6xl font-bold text-gray-300">404</h1>
-                  <p className="text-2xl mt-4">Page Not Found</p>
+            <Route
+              path="*"
+              element={
+                <div className="flex min-h-screen items-center justify-center px-6">
+                  <div className="card max-w-lg p-10 text-center">
+                    <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-700/80">
+                      Error 404
+                    </p>
+                    <h1 className="mt-4 text-5xl font-bold tracking-[-0.05em] text-slate-900">
+                      Page not found
+                    </h1>
+                    <p className="mt-4 text-slate-600">
+                      The page you were looking for doesn&apos;t exist or has been moved.
+                    </p>
+                  </div>
                 </div>
-              </div>
-            } />
+              }
+            />
           </Routes>
         </div>
         <Toaster position="top-right" richColors />
@@ -76,4 +76,4 @@ function App() {
   );
 }
 
-export default App;   
+export default App;

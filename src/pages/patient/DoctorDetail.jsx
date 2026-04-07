@@ -1,148 +1,151 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, CalendarDays, Clock3, IndianRupee, Star, Stethoscope } from 'lucide-react';
 import { useState } from 'react';
-import Button from '../../components/common/Button';
+import { useNavigate, useParams } from 'react-router-dom';
 import BookingModal from '../../components/common/BookingModal';
+import Button from '../../components/common/Button';
 
 const DoctorDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [doctor] = useState({
-    id: parseInt(id),
-    name: "Dr. Anjali Menon",
-    specialty: "Cardiologist",
+    id: Number.parseInt(id, 10),
+    name: 'Dr. Anjali Menon',
+    specialty: 'Cardiologist',
     experience: 12,
     rating: 4.9,
     fee: 800,
-    bio: "Dr. Anjali Menon is a highly experienced cardiologist with over 12 years of practice. She specializes in preventive cardiology and heart failure management.",
-    reviews: 124
+    bio: 'Dr. Anjali Menon is a highly experienced cardiologist focused on preventive care, heart failure management, and patient education.',
+    reviews: 124,
   });
-
-  const [selectedDate, setSelectedDate] = useState("15 April 2026");
+  const [selectedDate, setSelectedDate] = useState('15 April 2026');
   const [selectedTime, setSelectedTime] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const availableSlots = [
-    "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM",
-    "02:00 PM", "02:30 PM", "03:00 PM", "04:00 PM"
-  ];
+  const availableSlots = ['09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '02:00 PM', '02:30 PM', '03:00 PM', '04:00 PM'];
 
   const handleBook = () => {
     if (!selectedTime) {
-      alert("Please select a time slot");
+      alert('Please select a time slot');
       return;
     }
     setIsModalOpen(true);
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <button 
-        onClick={() => navigate(-1)}
-        className="mb-6 text-primary flex items-center gap-2 hover:underline"
-      >
-        ← Back to Doctors
+    <div className="mx-auto max-w-6xl space-y-8">
+      <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-700">
+        <ArrowLeft className="h-4 w-4" />
+        Back to doctors
       </button>
 
-      <div className="grid lg:grid-cols-12 gap-10">
-        {/* Doctor Info */}
-        <div className="lg:col-span-5">
-          <div className="card p-8">
-            <div className="w-40 h-40 mx-auto bg-gradient-to-br from-sky-100 to-teal-100 rounded-3xl flex items-center justify-center text-7xl mb-6">
-              👩‍⚕️
+      <div className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+        <section className="card p-8">
+          <div className="flex h-24 w-24 items-center justify-center rounded-[1.8rem] bg-gradient-to-br from-cyan-100 to-emerald-100 text-cyan-700">
+            <Stethoscope className="h-12 w-12" />
+          </div>
+
+          <h1 className="mt-8 text-4xl font-bold tracking-[-0.05em] text-slate-900">{doctor.name}</h1>
+          <p className="mt-2 text-lg font-medium text-cyan-700">{doctor.specialty}</p>
+
+          <div className="mt-8 grid grid-cols-3 gap-4">
+            <div className="rounded-[1.3rem] bg-slate-50 p-4 text-center">
+              <p className="text-2xl font-bold text-slate-900">{doctor.experience}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">Years</p>
             </div>
-            
-            <h1 className="text-4xl font-bold text-center">{doctor.name}</h1>
-            <p className="text-center text-primary text-xl mt-1">{doctor.specialty}</p>
-
-            <div className="flex justify-center gap-8 my-8 text-center">
-              <div>
-                <p className="text-3xl font-semibold">{doctor.experience}</p>
-                <p className="text-sm text-gray-500">Years Exp.</p>
-              </div>
-              <div>
-                <p className="text-3xl font-semibold">{doctor.rating}</p>
-                <p className="text-sm text-gray-500">Rating</p>
-              </div>
-              <div>
-                <p className="text-3xl font-semibold">{doctor.reviews}</p>
-                <p className="text-sm text-gray-500">Reviews</p>
-              </div>
+            <div className="rounded-[1.3rem] bg-slate-50 p-4 text-center">
+              <p className="text-2xl font-bold text-slate-900">{doctor.rating}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">Rating</p>
             </div>
-
-            <p className="text-gray-700 leading-relaxed">{doctor.bio}</p>
-
-            <div className="mt-8 pt-8 border-t">
-              <p className="font-medium mb-2">Consultation Fee</p>
-              <p className="text-4xl font-bold text-emerald-600">₹{doctor.fee}</p>
+            <div className="rounded-[1.3rem] bg-slate-50 p-4 text-center">
+              <p className="text-2xl font-bold text-slate-900">{doctor.reviews}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">Reviews</p>
             </div>
           </div>
-        </div>
 
-        {/* Booking Section */}
-        <div className="lg:col-span-7">
-          <div className="card p-8">
-            <h2 className="text-2xl font-semibold mb-6">Book Appointment</h2>
+          <p className="mt-8 text-sm leading-8 text-slate-600">{doctor.bio}</p>
 
-            {/* Date Selector */}
-            <div className="mb-8">
-              <p className="font-medium mb-3">Select Date</p>
-              <div className="flex gap-3 overflow-x-auto pb-4">
-                {["14 Apr", "15 Apr", "16 Apr", "17 Apr", "18 Apr"].map((date, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setSelectedDate(date + " 2026")}
-                    className={`px-6 py-4 rounded-2xl whitespace-nowrap transition ${
-                      selectedDate.includes(date)
-                        ? 'bg-primary text-white'
-                        : 'bg-gray-100 hover:bg-gray-200'
-                    }`}
-                  >
-                    {date}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Time Slots */}
-            <div>
-              <p className="font-medium mb-4">Available Time Slots</p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {availableSlots.map((time) => (
-                  <button
-                    key={time}
-                    onClick={() => setSelectedTime(time)}
-                    className={`py-4 rounded-2xl font-medium transition border ${
-                      selectedTime === time
-                        ? 'bg-primary text-white border-primary'
-                        : 'border-gray-300 hover:border-primary hover:bg-gray-50'
-                    }`}
-                  >
-                    {time}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <Button 
-              onClick={handleBook}
-              className="w-full mt-10 py-4 text-lg"
-              disabled={!selectedTime}
-            >
-              Confirm Booking - ₹{doctor.fee}
-            </Button>
+          <div className="mt-8 flex items-center gap-2 text-3xl font-bold tracking-[-0.05em] text-emerald-600">
+            <IndianRupee className="h-6 w-6" />
+            {doctor.fee}
+            <span className="text-sm font-medium text-slate-400">consultation fee</span>
           </div>
-        </div>
+        </section>
+
+        <section className="card p-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-700/80">Book Appointment</p>
+          <h2 className="mt-3 text-3xl font-bold tracking-[-0.04em] text-slate-900">Choose a date and time</h2>
+
+          <div className="mt-8">
+            <p className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-700">
+              <CalendarDays className="h-4 w-4" />
+              Select Date
+            </p>
+            <div className="flex gap-3 overflow-x-auto pb-2">
+              {['14 Apr', '15 Apr', '16 Apr', '17 Apr', '18 Apr'].map((date) => (
+                <button
+                  key={date}
+                  onClick={() => setSelectedDate(`${date} 2026`)}
+                  className={`rounded-2xl px-5 py-3 text-sm font-semibold whitespace-nowrap transition ${
+                    selectedDate.includes(date)
+                      ? 'bg-slate-900 text-white shadow-soft'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {date}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <p className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-700">
+              <Clock3 className="h-4 w-4" />
+              Available Time Slots
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {availableSlots.map((time) => (
+                <button
+                  key={time}
+                  onClick={() => setSelectedTime(time)}
+                  className={`rounded-2xl border px-4 py-4 text-sm font-semibold transition ${
+                    selectedTime === time
+                      ? 'border-slate-900 bg-slate-900 text-white'
+                      : 'border-slate-200 bg-white text-slate-600 hover:border-cyan-300 hover:bg-cyan-50'
+                  }`}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-[1.5rem] bg-slate-50 p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-semibold text-slate-700">Selected consultation</p>
+                <p className="mt-2 text-sm text-slate-500">{selectedDate}</p>
+              </div>
+              <div className="flex items-center gap-2 text-sm font-semibold text-amber-600">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                {doctor.rating}
+              </div>
+            </div>
+          </div>
+
+          <Button onClick={handleBook} className="mt-8 w-full py-4 text-base" disabled={!selectedTime}>
+            Confirm Booking
+          </Button>
+        </section>
       </div>
 
-      <BookingModal 
+      <BookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         doctor={doctor}
         selectedDate={selectedDate}
         selectedTime={selectedTime}
         onConfirm={() => {
-          alert(`✅ Appointment confirmed with ${doctor.name} on ${selectedDate} at ${selectedTime}`);
+          alert(`Appointment confirmed with ${doctor.name} on ${selectedDate} at ${selectedTime}`);
           setIsModalOpen(false);
         }}
       />
