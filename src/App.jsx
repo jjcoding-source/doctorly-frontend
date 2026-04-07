@@ -8,6 +8,8 @@ import Register from "./pages/public/Register";
 
 import PatientDashboard from "./pages/patient/Dashboard";
 import Doctors from "./pages/patient/Doctors";
+import Doctors from './pages/patient/Doctors';
+import DoctorDetail from './pages/patient/DoctorDetail';
 
 import DoctorDashboard from "./pages/doctor/Dashboard";
 
@@ -35,10 +37,8 @@ function App() {
                   path="/patient/dashboard"
                   element={<PatientDashboard />}
                 />
-                <Route
-                  path="/patient/doctors"
-                  element={<div>Doctors Page </div>}
-                />
+                <Route path="/patient/doctors" element={<Doctors />} />
+                <Route path="/patient/doctors/:id" element={<DoctorDetail />} />
               </Route>
             </Route>
 
